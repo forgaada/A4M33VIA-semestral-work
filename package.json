@@ -1,0 +1,21 @@
+{
+  "name": "a4m33via-semestral-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.fel.cvut.cz:forgaada/a4m33via-semestral-project.git"
+  },
+  "author": "forgaada",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-csp-header": "^5.0.0",
+    "xhr2": "^0.2.1"
+  }
+}
