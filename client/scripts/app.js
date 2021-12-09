@@ -10,6 +10,7 @@ function pageController(hash) {
                 element.style.display = 'none';
             }
             document.getElementById('api1-box').style.display = 'flex';
+            displayBMIResults();
             break;
         }
         case '#page2': {
@@ -41,34 +42,43 @@ function clearBmiContents() {
     document.getElementById('bmi-output-label').innerText = 'BMI: ';
 }
 
-function addBMIResult() {
-    let createdElement = document.createElement('label');
+function addBMIResult(bmiValue, bmiStatus) {
+    let arr = JSON.parse(window.localStorage.getItem('bmiRecords'));
+    if (arr === null || arr === undefined) {
+        arr = []
+    }
 
-    let createdInputDiv = document.createElement('div');
-    createdInputDiv.classList.add('content_inline');
-    createdInputDiv.style.display = 'none';
-    createdElement.appendChild(createdInputDiv);
+    arr.push({
+        val: bmiValue,
+        stat: bmiStatus,
+        date: new Date().toLocaleDateString("en-US")
+    });
 
-    let createdDiv = document.createElement('div');
-    createdDiv.classList.add('content_inline');
-    createdElement.appendChild(createdDiv);
+    window.localStorage.setItem('bmiRecords', JSON.stringify(arr));
+}
 
-    let createdLabel = document.createElement('label');
-    createdLabel.innerText = 'BMI: ';
-    createdLabel.style.height = '40px';
-    createdInputDiv.appendChild(createdLabel);
+function displayBMIResults() {
+    document.getElementById('bmi-results').innerHTML = '';
+    document.getElementById('bmi-results-content').style.display = 'flex';
+    let arr = JSON.parse(window.localStorage.getItem('bmiRecords'));
+    if (arr === null || arr === undefined) {
+        arr = []
+    }
 
-    let createdInput = document.createElement('input');
-    createdInput.type = 'number';
-    createdInput.id = "aaa" + '-input';
-    createdInputDiv.appendChild(createdInput);
+    for (let record of arr) {
+        let createdElement = document.createElement('label');
 
-    let confirmButton = document.createElement('button');
-    confirmButton.classList.add('arrow-button');
-    confirmButton.innerText = 'Smazat';
-    createdInputDiv.appendChild(confirmButton);
+        let createdInputDiv = document.createElement('div');
+        createdInputDiv.classList.add('content_inline');
+        createdElement.appendChild(createdInputDiv);
 
-    document.getElementById('bmi-results').appendChild(createdElement);
+        let createdLabel = document.createElement('label');
+        createdLabel.innerText = 'BMI: ' + record.val + ' Status: ' + record.stat + ' Dne: ' + record.date;
+        createdLabel.style.height = '25px';
+        createdInputDiv.appendChild(createdLabel);
+
+        document.getElementById('bmi-results').appendChild(createdElement);
+    }
 }
 
 /**
@@ -107,7 +117,8 @@ function setButtonListeners() {
                 if (bmiValue < 0 || bmiValue > 100) bmiValue = 0;
                 document.getElementById('bmi-output').value = bmiValue;
                 document.getElementById('bmi-output-label').innerText = "BMI: " + getBMIStatus(bmiValue);
-                // addBMIResult();
+                addBMIResult(bmiValue, getBMIStatus(bmiValue));
+                displayBMIResults();
             }
         };
         xmlHttpRequest.open("GET", `https://via-healthy-app-1681c74d.deno.dev/api/bmi?height=${h}&weight=${w}`, true);
@@ -120,6 +131,11 @@ function setButtonListeners() {
 
     document.getElementById('search-api3-button').addEventListener('click', () => {
         alert('tada');
+    });
+
+    document.getElementById('delete-bmi-button').addEventListener('click', () => {
+        window.localStorage.setItem('bmiRecords', JSON.stringify([]));
+        document.getElementById('bmi-results').innerHTML = '';
     });
 }
 
