@@ -72,6 +72,25 @@ function addBMIResult() {
 }
 
 /**
+ * Calculates BMI status in plain text, based on index value.
+ * @param bmiValue body mass index value
+ * @returns {string} bmi status in text form
+ */
+function getBMIStatus(bmiValue) {
+    let bmiStatus;
+    if (bmiValue < 18.5) {
+        bmiStatus = "Podváha"
+    } else if (bmiValue < 24.9) {
+        bmiStatus = "Normální váha"
+    } else if (bmiValue < 29.9) {
+        bmiStatus = "Nadváha"
+    } else {
+        bmiStatus = "Obezita"
+    }
+    return bmiStatus;
+}
+
+/**
  * Creates listeners on button click events and sends XHR request to API's.
  */
 function setButtonListeners() {
@@ -82,9 +101,10 @@ function setButtonListeners() {
         const xmlHttpRequest = new XMLHttpRequest();
         xmlHttpRequest.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
-                document.getElementById('bmi-output').value = JSON.parse(xmlHttpRequest.response).result;
-                document.getElementById('bmi-output-label').innerText = "BMI: " + JSON.parse(xmlHttpRequest.response).status;
-                addBMIResult();
+                let bmiValue = JSON.parse(xmlHttpRequest.response).result;
+                document.getElementById('bmi-output').value = bmiValue;
+                document.getElementById('bmi-output-label').innerText = "BMI: " + getBMIStatus(bmiValue);
+                // addBMIResult();
             }
         };
         xmlHttpRequest.open("GET", `https://via-healthy-app-1681c74d.deno.dev/api/bmi?height=${h}&weight=${w}`, true);
