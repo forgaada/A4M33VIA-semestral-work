@@ -78,7 +78,9 @@ function addBMIResult() {
  */
 function getBMIStatus(bmiValue) {
     let bmiStatus;
-    if (bmiValue < 18.5) {
+    if (bmiValue === 0) {
+        bmiStatus = "Chyba"
+    } else if (bmiValue < 18.5) {
         bmiStatus = "Podváha"
     } else if (bmiValue < 24.9) {
         bmiStatus = "Normální váha"
@@ -102,6 +104,7 @@ function setButtonListeners() {
         xmlHttpRequest.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
                 let bmiValue = JSON.parse(xmlHttpRequest.response).result;
+                if (bmiValue < 0 || bmiValue > 100) bmiValue = 0;
                 document.getElementById('bmi-output').value = bmiValue;
                 document.getElementById('bmi-output-label').innerText = "BMI: " + getBMIStatus(bmiValue);
                 // addBMIResult();
