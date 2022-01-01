@@ -169,7 +169,30 @@ function setButtonListeners() {
     });
 
     document.getElementById('search-api3-button').addEventListener('click', () => {
-        alert('tada');
+        const xhr = new XMLHttpRequest();
+        xhr.withCredentials = false;
+
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === this.DONE) {
+                let data = JSON.parse(xhr.response).data;
+                let resultLabel = document.getElementById("bmr-output");
+                resultLabel.style.backgroundColor = "white";
+                resultLabel.style.borderRadius = "25px";
+                resultLabel.style.textAlign = "center";
+                resultLabel.style.lineHeight = "150%";
+                resultLabel.style.display = "block";
+                resultLabel.style.paddingBottom = "15px";
+                resultLabel.innerText = `Rychlost spalování vašeho metabolismu: ${Math.floor(data.goals["maintain weight"])} kcal / den \r
+                Doporučený denní příjem pro hubnutí: ${Math.floor(data.goals["Weight loss"].calory)} kcal \r
+                Doporučený denní příjem pro nabírání: ${Math.floor(data.goals["Weight gain"].calory)} kcal`;
+            }
+        });
+
+        xhr.open("GET", `https://fitness-calculator.p.rapidapi.com/dailycalorie?age=${document.getElementById('fitness-age-input').value}&gender=${document.querySelector('.gender:checked').value}&height=${document.getElementById('fitness-height-input').value}&weight=${document.getElementById('fitness-weight-input').value}&activitylevel=${document.querySelector('.activity:checked').value}`);
+        xhr.setRequestHeader("x-rapidapi-host", "fitness-calculator.p.rapidapi.com");
+        xhr.setRequestHeader("x-rapidapi-key", "9d4861ef5amsh4f2e9163426b16bp1249efjsnb5ef49204b62");
+
+        xhr.send(null);
     });
 
     document.getElementById('delete-bmi-button').addEventListener('click', () => {
