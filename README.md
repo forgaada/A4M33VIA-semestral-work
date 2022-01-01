@@ -36,4 +36,5 @@ jedince. Na základě tohoto údaje rovněž stanovuje doporučenný denní kalo
 ## URL nasazené aplikace
 - Client : https://via-semestral-work-2021.web.app
 - Server (vlastní API): https://via-healthy-app-1681c74d.deno.dev/
+- Swagger dokumentace: http://via-healthy-app-documentation.wz.cz/
 
