@@ -67,13 +67,15 @@ function displayBMIResults() {
 
     for (let record of arr) {
         let createdElement = document.createElement('label');
+        createdElement.style.backgroundColor = "white";
+        createdElement.style.borderRadius = "25px";
 
         let createdInputDiv = document.createElement('div');
         createdInputDiv.classList.add('content_inline');
         createdElement.appendChild(createdInputDiv);
 
         let createdLabel = document.createElement('label');
-        createdLabel.innerText = 'BMI: ' + record.val + ' Status: ' + record.stat + ' Dne: ' + record.date;
+        createdLabel.innerText = 'BMI: ' + record.val + ' | Status: ' + record.stat + ' | Dne: ' + record.date;
         createdLabel.style.height = '25px';
         createdInputDiv.appendChild(createdLabel);
 
@@ -114,6 +116,7 @@ function setButtonListeners() {
         xmlHttpRequest.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
                 let bmiValue = JSON.parse(xmlHttpRequest.response).result;
+                if (bmiValue === undefined || bmiValue === null) return;
                 if (bmiValue < 0 || bmiValue > 100) bmiValue = 0;
                 document.getElementById('bmi-output').value = bmiValue;
                 document.getElementById('bmi-output-label').innerText = "BMI: " + getBMIStatus(bmiValue);
@@ -149,3 +152,4 @@ window.location.hash = '#page1';
 document.getElementById('api1-box').style.display = 'flex';
 clearBmiContents();
 setButtonListeners();
+displayBMIResults();

@@ -41,16 +41,17 @@
                 </p>
                 <p>
                     <label for="bmi-height-input">Výška [cm]: </label><input type="number" id="bmi-height-input"
-                                                                          placeholder="Výška v centimetrech ...">
+                                                                             pattern="[A-Za-z0-9]+" placeholder="Výška v centimetrech ...">
                     <label for="bmi-weight-input">Hmotnost [kg]: </label><input type="number" id="bmi-weight-input"
                                                                           placeholder="Hmotnost v kilogramech ...">
-                    <label id="bmi-output-label" for="bmi-output">BMI: </label><input type="text" id="bmi-output"
-                                                                          placeholder="Vaše BMI ...">
                     <button class="content-button" id="bmi-button">Spočítat</button>
+                    <label id="bmi-output-label" for="bmi-output">BMI: </label><input type="text" id="bmi-output"
+                                                                          readonly placeholder="Vaše BMI ...">
                 </p>
             </div>
             <div id='bmi-results-content' class="content-box bmi-results-boxes">
                 <h4>Přehled BMI záznamů</h4>
+                <p>Vaše záznamy: </p>
                 <p id="bmi-results" class="content-scrollable">BMI záznamy: </p>
                 <button class="content-button" id="delete-bmi-button">Smazat vše</button>
             </div>
