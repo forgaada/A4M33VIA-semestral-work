@@ -83,6 +83,25 @@ function displayBMIResults() {
     }
 }
 
+function displayNutritionResults(food) {
+    let resultLabel = document.getElementById("nutritionix-search-result");
+    resultLabel.style.backgroundColor = "white";
+    resultLabel.style.borderRadius = "25px";
+    resultLabel.style.textAlign = "center";
+    resultLabel.style.lineHeight = "150%";
+    resultLabel.style.display = "block";
+    resultLabel.style.paddingBottom = "15px";
+    resultLabel.innerText = `
+    Název: ${food.food_name} \r
+    Počet: ${food.serving_qty} \r
+    Velikost / jednotka: ${food.serving_unit} \r
+    Hmotnost [g]: ${food.serving_weight_grams} \r
+    Kalorie [kcal]: ${food.nf_calories} \r
+    Tuky [g]: ${food.nf_total_fat} \r
+    Cukry [g]: ${food.nf_sugars} \r
+    Bílkoviny [g]: ${food.nf_protein} \r`
+}
+
 /**
  * Calculates BMI status in plain text, based on index value.
  * @param bmiValue body mass index value
@@ -129,7 +148,24 @@ function setButtonListeners() {
     });
 
     document.getElementById('search-api2-button').addEventListener('click', () => {
-        alert('tada');
+        let queryString = document.getElementById("search-api2-input").value;
+
+        const xmlHttpRequest = new XMLHttpRequest();
+        xmlHttpRequest.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                let foods = JSON.parse(xmlHttpRequest.response).foods;
+                displayNutritionResults(foods[0]);
+            } else {
+                let resultLabel = document.getElementById("nutritionix-search-result");
+                resultLabel.innerText = "Žádné výsledky";
+            }
+        };
+        xmlHttpRequest.open("POST", `https://trackapi.nutritionix.com/v2/natural/nutrients`, true);
+        xmlHttpRequest.setRequestHeader('Access-Control-Allow-Headers', '*');
+        xmlHttpRequest.setRequestHeader("x-app-id", "aa50ba62");
+        xmlHttpRequest.setRequestHeader("x-app-key", "4e9b9d54c9a9c3f11ee37209396bbee4");
+        xmlHttpRequest.setRequestHeader("Content-Type", "application/json");
+        xmlHttpRequest.send(JSON.stringify({ "query": queryString }));
     });
 
     document.getElementById('search-api3-button').addEventListener('click', () => {

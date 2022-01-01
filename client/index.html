@@ -23,7 +23,7 @@
                     type="checkbox" id="menu-control-input"/>
                 <ul class="main_menu" id="nav-menu">
                     <li><a class="unselected" id="page1-link" href="#page1">BMI Calculator</a></li>
-                    <li><a class="unselected" id="page2-link" href="#page2">Page 2</a></li>
+                    <li><a class="unselected" id="page2-link" href="#page2">Nutritionix API</a></li>
                     <li><a class="unselected" id="page3-link" href="#page3">Page 3</a></li>
                 </ul>
                 <div id="mobile-page-title">Healthy Lifestyle App</div>
@@ -55,15 +55,28 @@
                 <p id="bmi-results" class="content-scrollable">BMI záznamy: </p>
                 <button class="content-button" id="delete-bmi-button">Smazat vše</button>
             </div>
+
+
             <!--    FIND API 2 SECTION -->
             <div id="api2-box" class="content-box api-boxes">
-                <h4>Hledej za pomoci API 2</h4>
+                <h4>Hledej za pomoci Nutritionix</h4>
+                <img src="images/nutritionix.png" alt="nutritionix" style="height: 80px; width: 260px; padding: 0">
                 <p>
-                    <label for="search-api3-input">Hledám: </label><input type="text" id="search-api2-input"
+                    Nutritionix je jedna z největších databází jídel na světě. Její veřejné API umožňuje vyhledat nutriční
+                    hodnoty jídel za pomoci slov nebo frází v anglickém jazyce.
+                </p>
+                <p>
+                    <label for="search-api2-input">Hledám: </label><input type="text" id="search-api2-input"
                                                                           placeholder="Něco zajímavého ...">
                     <button class="content-button" id="search-api2-button">Hledej</button>
                 </p>
+                <p>
+                    Výsledek hledání:
+                    <label id="nutritionix-search-result"></label>
+                </p>
             </div>
+
+
             <!--    FIND API 3 SECTION -->
             <div id="api3-box" class="content-box api-boxes">
                 <h4>Hledej za pomoci API 3</h4>
